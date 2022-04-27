@@ -600,6 +600,15 @@ public class InAppBrowser extends CordovaPlugin {
         } else {
             this.inAppWebView.loadUrl(url);
         }
+        this.inAppWebView.setDownloadListener(new DownloadListener() {
+             public void onDownloadStart(String url, String userAgent,
+                     String contentDisposition, String mimetype,
+                     long contentLength) {
+               Intent i = new Intent(Intent.ACTION_VIEW);
+               i.setData(Uri.parse(url));
+               cordova.getActivity().startActivity(i);
+             }
+        });
         this.inAppWebView.requestFocus();
     }
 
@@ -988,6 +997,8 @@ public class InAppBrowser extends CordovaPlugin {
                 } else if (clearSessionCache) {
                     CookieManager.getInstance().removeSessionCookie();
                 }
+                   
+                inAppWebView.loadUrl(url);
 
                 // Enable Thirdparty Cookies
                 CookieManager.getInstance().setAcceptThirdPartyCookies(inAppWebView,true);
