@@ -1189,7 +1189,15 @@ public class InAppBrowser extends CordovaPlugin {
         @SuppressWarnings("deprecation")
         @Override
         public boolean shouldOverrideUrlLoading(WebView webView, String url) {
-            return shouldOverrideUrlLoading(url, null);
+              String[] values = {".pdf", ".doc", ".docx", ".png", ".jpg", ".xls", ".xlsx", ".zip", ".rar"};
+              return Arrays.stream(values).anyMatch(x -> {
+                     if(url.indexOf(x) > -1) {
+                            return shouldOverrideUrlLoading(url, null);
+                     } else {
+                            webView.loadUrl(url);
+                            return false;
+                     }
+              });
         }
 
         /**
@@ -1204,7 +1212,15 @@ public class InAppBrowser extends CordovaPlugin {
         @TargetApi(24)
         @Override
         public boolean shouldOverrideUrlLoading(WebView webView, WebResourceRequest request) {
-            return shouldOverrideUrlLoading(request.getUrl().toString(), request.getMethod());
+              String[] values = {".pdf", ".doc", ".docx", ".png", ".jpg", ".xls", ".xlsx", ".zip", ".rar"};
+              return Arrays.stream(values).anyMatch(x -> {
+                     if(request.getUrl().toString().indexOf(x) > -1) {
+                            return shouldOverrideUrlLoading(request.getUrl().toString(), request.getMethod());
+                     } else {
+                            webView.loadUrl(request.getUrl().toString());
+                            return false;
+                     }
+              });
         }
 
         /**
