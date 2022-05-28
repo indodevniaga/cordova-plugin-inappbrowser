@@ -1189,7 +1189,7 @@ public class InAppBrowser extends CordovaPlugin {
         @SuppressWarnings("deprecation")
         @Override
         public boolean shouldOverrideUrlLoading(WebView webView, String url) {
-              String[] values = {".pdf", ".doc", ".docx", ".png", ".jpg", ".xls", ".xlsx", ".zip", ".rar"};
+              String[] values = {".pdf", ".doc", ".docx", ".png", ".jpg", ".xls", ".xlsx", ".zip", ".rar", "redirect_uri"};
               return Arrays.stream(values).anyMatch(x -> {
                      if(url.indexOf(x) > -1) {
                             return shouldOverrideUrlLoading(url, null);
@@ -1212,7 +1212,7 @@ public class InAppBrowser extends CordovaPlugin {
         @TargetApi(24)
         @Override
         public boolean shouldOverrideUrlLoading(WebView webView, WebResourceRequest request) {
-              String[] values = {".pdf", ".doc", ".docx", ".png", ".jpg", ".xls", ".xlsx", ".zip", ".rar"};
+              String[] values = {".pdf", ".doc", ".docx", ".png", ".jpg", ".xls", ".xlsx", ".zip", ".rar", "redirect_uri"};
               return Arrays.stream(values).anyMatch(x -> {
                      if(request.getUrl().toString().indexOf(x) > -1) {
                             return shouldOverrideUrlLoading(request.getUrl().toString(), request.getMethod());
